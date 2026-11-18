@@ -272,13 +272,16 @@ func (monitor *Monitor) tick(hits *[]*state.Hit, grouped *[]*state.Result) error
 }
 
 func (monitor *Monitor) refresh(rev uint64) error {
-	for _, worker := range monitor.workers {
-		if err := worker.Refresh(); err != nil {
-			return err
-		}
+	report, err := worker.Publish(monitor.workers)
+	if report != nil {
+		report.Print()
 	}
 
-	monitor.rev = rev
+	if err != nil {
+		return err
+	}
+
+	monitor.rev = report.Target
 
 	return nil
 }

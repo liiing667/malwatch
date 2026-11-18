@@ -143,8 +143,16 @@ func TestRefresh(t *testing.T) {
 		t.Errorf("refresh err %v", err)
 	}
 
-	if scan.rev != 123 {
-		t.Errorf("unexpected rev %v, want %v", scan.rev, 123)
+	sigs, err := sig.Acquire()
+	if err != nil {
+		t.Fatalf("acquire err %v", err)
+	}
+
+	want := sigs.Rev
+	sigs.Release()
+
+	if scan.rev != want {
+		t.Errorf("unexpected rev %v, want %v", scan.rev, want)
 	}
 }
 

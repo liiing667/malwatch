@@ -114,13 +114,16 @@ func (scan *Scan) Start(job *job.Job) error {
 }
 
 func (scan *Scan) refresh(rev uint64) error {
-	for _, worker := range scan.workers {
-		if err := worker.Refresh(); err != nil {
-			return err
-		}
+	report, err := worker.Publish(scan.workers)
+	if report != nil {
+		report.Print()
 	}
 
-	scan.rev = rev
+	if err != nil {
+		return err
+	}
+
+	scan.rev = report.Target
 
 	return nil
 }

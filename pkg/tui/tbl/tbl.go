@@ -15,6 +15,9 @@ var (
 
 	// HdrFileReport stores the header for file report.
 	HdrFileReport = []string{"Path", "Malware", "Status", "Actions"}
+
+	// HdrSigRefresh stores the header for the multi-worker sig refresh table.
+	HdrSigRefresh = []string{"Worker", "Stage", "Rev Before", "Rev After", "Status"}
 )
 
 // Prepare formats header and row data for table output.
