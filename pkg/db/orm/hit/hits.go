@@ -24,11 +24,12 @@ type Paths map[string][]*Meta
 
 // Meta represents hit meta.
 type Meta struct {
-	Time   time.Time  `json:"time"`
-	Rules  []string   `json:"rules"`
-	Status string     `json:"status"`
-	Attr   *fsys.Attr `json:"attr"`
-	Acts   []string   `json:"actions"`
+	Time       time.Time  `json:"time"`
+	Rules      []string   `json:"rules"`
+	Status     string     `json:"status"`
+	Attr       *fsys.Attr `json:"attr"`
+	Acts       []string   `json:"actions"`
+	Incomplete bool       `json:"incomplete"`
 }
 
 // History represents target hit history.
@@ -43,12 +44,13 @@ const (
 )
 
 // NewMeta returns new hit meta.
-func NewMeta(attr *fsys.Attr, matches []string, verbs ...string) *Meta {
+func NewMeta(attr *fsys.Attr, matches []string, incomplete bool, verbs ...string) *Meta {
 	return &Meta{
-		Time:  time.Now(),
-		Rules: matches,
-		Attr:  attr,
-		Acts:  verbs,
+		Time:       time.Now(),
+		Rules:      matches,
+		Attr:       attr,
+		Acts:       verbs,
+		Incomplete: incomplete,
 	}
 }
 
@@ -74,6 +76,7 @@ func (meta *Meta) LogVal() slog.Value {
 		slog.Time("time", meta.Time),
 		slog.Any("rules", meta.Rules),
 		slog.String("status", meta.Status),
+		slog.Bool("incomplete", meta.Incomplete),
 
 		slog.Attr{
 			Key: "attr", Value: attr,

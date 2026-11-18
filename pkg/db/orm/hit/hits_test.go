@@ -38,7 +38,7 @@ func TestNewMeta(t *testing.T) {
 			Acts:  []string{"alert"},
 		}
 
-		got = NewMeta(fsys.NewAttr(stat), []string{"eicar"}, "alert")
+		got = NewMeta(fsys.NewAttr(stat), []string{"eicar"}, false, "alert")
 	)
 
 	want.Time = got.Time

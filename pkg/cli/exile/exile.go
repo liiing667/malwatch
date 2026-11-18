@@ -36,7 +36,7 @@ func Do(env *env.Env, args []string) error {
 
 	var (
 		paths = state.Paths{
-			path: hit.NewMeta(fsys.NewAttr(stat), []string{}, "exile"),
+			path: hit.NewMeta(fsys.NewAttr(stat), []string{}, false, "exile"),
 		}
 
 		result = state.NewResult(re.Target(path), paths)

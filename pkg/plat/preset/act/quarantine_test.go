@@ -97,6 +97,8 @@ func TestQuarantine(t *testing.T) {
 						t.Name(),
 					},
 
+					false,
+
 					"quarantine"),
 			},
 		)

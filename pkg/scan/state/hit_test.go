@@ -136,6 +136,40 @@ func TestGroupDupe(t *testing.T) {
 	}
 }
 
+func TestGroupMergeIncomplete(t *testing.T) {
+	tmp := t.TempDir()
+
+	hits := []*Hit{
+		{
+			Path: tmp,
+			Meta: &hit.Meta{
+				Rules:      []string{"rule-one"},
+				Incomplete: true,
+			},
+		},
+
+		{
+			Path: tmp,
+			Meta: &hit.Meta{
+				Rules:      []string{"rule-two"},
+				Incomplete: false,
+			},
+		},
+	}
+
+	got := Group("fs", hits)
+
+	meta := got[0].Paths[tmp]
+
+	switch {
+	case !meta.Incomplete:
+		t.Errorf("merged meta must stay incomplete, got %+v", meta)
+
+	case !slices.Equal(meta.Rules, []string{"rule-one", "rule-two"}):
+		t.Errorf("unexpected merged rules %v", meta.Rules)
+	}
+}
+
 func TestGroupCompound(t *testing.T) {
 	var (
 		dir1, dir2 = t.TempDir(), t.TempDir()

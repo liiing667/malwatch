@@ -76,4 +76,8 @@ func merge(src *hit.Meta, dst *hit.Meta) {
 			dst.Rules = append(dst.Rules, rule)
 		}
 	}
+
+	// Incomplete evidence from either side cannot be dropped: a truncated
+	// batch keeps the merged result flagged as incomplete.
+	dst.Incomplete = dst.Incomplete || src.Incomplete
 }

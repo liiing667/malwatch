@@ -151,6 +151,8 @@ eval(gzinflate(base64_decode('test')));
 
 				[]string{"gz"},
 
+				false,
+
 				"clean",
 			),
 		},
@@ -212,6 +214,8 @@ eval(gzinflate(base64_decode('test')));
 					"b64",
 					"gz",
 				},
+
+				false,
 
 				"clean",
 			),

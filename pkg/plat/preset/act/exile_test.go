@@ -145,6 +145,8 @@ func TestExile(t *testing.T) {
 					t.Name(),
 				},
 
+				false,
+
 				"exile",
 			),
 		})
@@ -208,6 +210,8 @@ func TestExileRemoved(t *testing.T) {
 				[]string{
 					t.Name(),
 				},
+
+				false,
 
 				[]string{
 					"exile",
